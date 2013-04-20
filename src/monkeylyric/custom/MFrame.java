@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package monkeylyric.customcomponents;
+package monkeylyric.custom;
 
 import com.sun.awt.AWTUtilities;
 import java.awt.BorderLayout;
@@ -21,7 +21,7 @@ import java.awt.event.MouseMotionAdapter;
 
 /**
  *
- * @author anhle
+ * @author LeAnh
  */
 public class MFrame extends JFrame implements MouseMotionListener {
     private JPanel _north;

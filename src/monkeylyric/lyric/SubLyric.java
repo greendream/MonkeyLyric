@@ -7,7 +7,7 @@ package monkeylyric.lyric;
 
 /**
  *
- * @author TheRise
+ * @author LeAnh
  */
 public class SubLyric implements Comparable<Object>{
     private long _time;      // _time to start show this line of lyric

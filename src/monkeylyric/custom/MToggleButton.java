@@ -2,16 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package monkeylyric.customcomponents;
+package monkeylyric.custom;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JToggleButton;
 
 /**
  *
- * @author anhle
+ * @author LeAnh
  */
 public class MToggleButton extends JToggleButton{
     private ImageIcon _start;
@@ -36,9 +35,10 @@ public class MToggleButton extends JToggleButton{
     
     public MToggleButton(String start, String toggleOn, String toggleOff) {
         super();
-        _start = new ImageIcon(start);
-        _toggleOn = new ImageIcon(toggleOn);
-        _toggleOff = new ImageIcon(toggleOff);
+        
+        _start = new ImageIcon(this.getClass().getResource(start));
+        _toggleOn = new ImageIcon(this.getClass().getResource(toggleOn));
+        _toggleOff = new ImageIcon(this.getClass().getResource(toggleOff));
         
         this.setIcon(_start);
         this.setBorder(BorderFactory.createEmptyBorder());

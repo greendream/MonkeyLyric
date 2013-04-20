@@ -15,7 +15,7 @@ import org.mozilla.universalchardet.UniversalDetector;
 
 /**
  *
- * @author TheRise
+ * @author LeAnh
  */
 public class Lyric {
     
@@ -75,12 +75,11 @@ public class Lyric {
      * Load content of lyric file
      * @param filename 
      */
-    private void readFile(String filename) {
+    private void readFile(String fileName) {
             try {
-
                 // Open file as File input stream.
-                FileInputStream is = new FileInputStream(filename);
-                Scanner input = new Scanner(is,detectCharset(filename));
+                FileInputStream is = new FileInputStream(fileName);
+                Scanner input = new Scanner(is,detectCharset(fileName));
 
                 ArrayList<SubLyric> sublyricArray = new ArrayList<>();
                 while(input.hasNextLine()) {          
@@ -104,7 +103,7 @@ public class Lyric {
                 is.close();
                 input.close();
                 
-                System.out.println("Read File: '" + filename + "' complete !");
+                System.out.println("Read File: '" + fileName + "' complete !");
                 
             } catch (IOException e) {            
             }

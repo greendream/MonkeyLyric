@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package monkeylyric.customcomponents;
+package monkeylyric.custom;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -11,7 +11,7 @@ import monkeylyric.preferences.ScrollingModeSetting;
 
 /**
  *
- * @author anhle
+ * @author LeAnh
  */
 public class MButton extends JButton{
     private ImageIcon _startButton;
@@ -43,9 +43,9 @@ public class MButton extends JButton{
     
     public MButton(String start, String hover, String active) {
         super();
-        _startButton = new ImageIcon(start);
-        _startButtonHover = new ImageIcon(hover);
-        _startButtonActive = new ImageIcon(active);
+        _startButton = new ImageIcon(this.getClass().getResource(start));
+        _startButtonHover = new ImageIcon(this.getClass().getResource(hover));
+        _startButtonActive = new ImageIcon(this.getClass().getResource(active));
         
         this.setIcon(_startButton);
         this.setRolloverIcon(_startButtonHover);

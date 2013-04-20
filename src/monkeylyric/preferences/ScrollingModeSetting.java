@@ -17,7 +17,7 @@ public class ScrollingModeSetting {
     
     // Set for default setting frame ScrollingMode
     public ScrollingModeSetting() {
-        _backGround = new java.awt.Color(200, 210, 200, 150);
+        _backGround = new java.awt.Color(200, 110, 50, 150);
         _font = new Font(Font.SERIF, Font.LAYOUT_LEFT_TO_RIGHT, 20);
     }
 

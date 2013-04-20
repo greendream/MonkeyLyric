@@ -6,12 +6,13 @@ package monkeylyric;
 import javax.swing.UIManager;
 import monkeylyric.lyric.Lyric;
 import monkeylyric.lyricshower.ScrollingMode;
+import monkeylyric.preferences.General;
 
 /**
  *
- * @author anhle
+ * @author LeAnh
  */
-public class MonkeyLyric {
+public class MainProgram {
 
     /**
      * @param args the command line arguments
@@ -25,14 +26,10 @@ public class MonkeyLyric {
         }
         
         System.out.println("Welcome to Monkey-Lyric !");
-        Lyric lyric = new Lyric("lyrics/One Direction-What Makes You Beautiful.lrc");
-        lyric.printLyric();
+        General.getInstance().getLyric().printLyric();
         
         ScrollingMode scroll = new ScrollingMode();
-        scroll.setLyric(lyric);
-        scroll.setCurrentPlayTime(0);
         scroll.play();
-        
         
     }
 }

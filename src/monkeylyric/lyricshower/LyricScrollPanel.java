@@ -14,18 +14,17 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import monkeylyric.lyric.Lyric;
 import monkeylyric.lyric.SubLyric;
+import monkeylyric.preferences.General;
 import monkeylyric.preferences.ScrollingModeSetting;
 
 /**
  *
- * @author anhle
+ * @author LeAnh
  */
 public class LyricScrollPanel extends JPanel {
 
     public static final int boderSize = 10;
     public static final int lineDistance = 2;
-    private long _time;
-    private Lyric _lyric;
     private int _oldPlayLine;
     private long _nextY;
     private long _currY;
@@ -40,8 +39,6 @@ public class LyricScrollPanel extends JPanel {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(350, 250));
         setBackground(new java.awt.Color(0, 0, 0, 0));
-        _time = 0;
-        _lyric = new Lyric();
         _oldPlayLine = 0;
         _currY = 0;
         _nextY = 0;
@@ -123,11 +120,7 @@ public class LyricScrollPanel extends JPanel {
     }
 
     public void setTime(long time) {
-        this._time = time;
-    }
-
-    public void setLyric(Lyric lyric) {
-        this._lyric = lyric;
+        General.getInstance().setTime(time);
     }
     
     public void setIsRepaintLyric(boolean isPaintLyric) {
@@ -151,13 +144,13 @@ public class LyricScrollPanel extends JPanel {
      * @return the _time
      */
     public long getTime() {
-        return _time;
+        return General.getInstance().getTime();
     }
 
     /**
      * @return the _lyric
      */
     public Lyric getLyric() {
-        return _lyric;
+        return General.getInstance().getLyric();
     }
 }

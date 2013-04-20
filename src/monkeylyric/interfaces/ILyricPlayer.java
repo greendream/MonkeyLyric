@@ -1,4 +1,4 @@
-package monkeylyric;
+package monkeylyric.interfaces;
 
 import monkeylyric.lyric.Lyric;
 
@@ -9,15 +9,13 @@ import monkeylyric.lyric.Lyric;
 
 /**
  *
- * @author anhle
+ * @author LeAnh
  */
 public interface ILyricPlayer {
     public void play();
     public void pase();
     public void stop();
     public void seek(long time);
-    public Lyric getLyric();
-    public void setLyric(Lyric lrc);
     public long getCurrentPlayTime();
     public void setCurrentPlayTime(long time);
 }

@@ -16,11 +16,12 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import monkeylyric.ILyricPlayer;
-import monkeylyric.customcomponents.MButton;
-import monkeylyric.customcomponents.MFrame;
-import monkeylyric.customcomponents.MToggleButton;
+import monkeylyric.interfaces.ILyricPlayer;
+import monkeylyric.custom.MButton;
+import monkeylyric.custom.MFrame;
+import monkeylyric.custom.MToggleButton;
 import monkeylyric.lyric.Lyric;
+import monkeylyric.preferences.General;
 import monkeylyric.preferences.ScrollingModeSetting;
 
 public class ScrollingMode extends      MFrame
@@ -51,9 +52,9 @@ public class ScrollingMode extends      MFrame
         _panelNorth.setBackground(new java.awt.Color(0, 0, 0, 0));
         _panelNorth.setLayout(new BorderLayout());
         
-        _alwaysOnTopToggleButton = new MToggleButton("resources/images/non_top.png",
-                                                     "resources/images/non_top.png",
-                                                     "resources/images/top.png");
+        _alwaysOnTopToggleButton = new MToggleButton("/resources/images/non_top.png",
+                                                     "/resources/images/non_top.png",
+                                                     "/resources/images/top.png");
         _alwaysOnTopToggleButton.setToolTipText("Toggle On Always on Top");
         _alwaysOnTopToggleButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -61,9 +62,9 @@ public class ScrollingMode extends      MFrame
             }
         });
         
-        _closeButton = new MButton("resources/images/close_hover.png",
-                                     "resources/images/close_hover.png", 
-                                     "resources/images/close_active.png");
+        _closeButton = new MButton("/resources/images/close_hover.png",
+                                     "/resources/images/close_hover.png", 
+                                     "/resources/images/close_active.png");
         _closeButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 closeButtonClickHandler(evt);
@@ -95,14 +96,14 @@ public class ScrollingMode extends      MFrame
         _gridPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         _gridPanel.setBackground(new java.awt.Color(0, 0, 0, 0));
         
-        _backButton = new MButton("resources/images/back_start.png",
-                                     "resources/images/back_hover.png", 
-                                     "resources/images/back_active.png");
+        _backButton = new MButton("/resources/images/back_start.png",
+                                     "/resources/images/back_hover.png", 
+                                     "/resources/images/back_active.png");
         _backButton.setToolTipText("Back Track");
         
-        _playButton = new MButton("resources/images/play_start.png",
-                                     "resources/images/play_hover.png", 
-                                     "resources/images/play_active.png");
+        _playButton = new MButton("/resources/images/play_start.png",
+                                     "/resources/images/play_hover.png", 
+                                     "/resources/images/play_active.png");
         _playButton.setToolTipText("Play");
         _playButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -110,9 +111,9 @@ public class ScrollingMode extends      MFrame
             }
         });
         
-        _pauseButton = new MButton("resources/images/pause_start.png",
-                                     "resources/images/pause_hover.png", 
-                                     "resources/images/pause_active.png");
+        _pauseButton = new MButton("/resources/images/pause_start.png",
+                                     "/resources/images/pause_hover.png", 
+                                     "/resources/images/pause_active.png");
         _pauseButton.setToolTipText("Pause");
         _pauseButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -120,9 +121,9 @@ public class ScrollingMode extends      MFrame
             }
         });
         
-        _nextButton = new MButton("resources/images/next_start.png",
-                                     "resources/images/next_hover.png", 
-                                     "resources/images/next_active.png");
+        _nextButton = new MButton("/resources/images/next_start.png",
+                                     "/resources/images/next_hover.png", 
+                                     "/resources/images/next_active.png");
         _nextButton.setToolTipText("Next Track");
         
         _gridPanel.add(_backButton);
@@ -166,22 +167,16 @@ public class ScrollingMode extends      MFrame
 
     @Override
     public long getCurrentPlayTime() {
-        return _lyricScrollPanel.getTime();
+        return General.getInstance().getTime();
     }
 
     @Override
     public void setCurrentPlayTime(long time) {
-        _lyricScrollPanel.setTime(time);
+        General.getInstance().setTime(time);
     }
 
-    @Override
     public Lyric getLyric() {
-        return _lyricScrollPanel.getLyric();
-    }
-
-    @Override
-    public void setLyric(Lyric lrc) {
-        _lyricScrollPanel.setLyric(lrc);
+        return General.getInstance().getLyric();
     }
 
     @Override
