@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.BorderFactory;
@@ -42,17 +43,37 @@ public class LyricScrollPanel extends JPanel {
         _oldPlayLine = 0;
         _currY = 0;
         _nextY = 0;
-        _isPaintLyric = true;
+        _isPaintLyric = false;
         
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
+        
+        
         // Prepare for draw lyric
         Graphics2D g2 = (Graphics2D) g;
         g2.setFont(ScrollingModeSetting.getInstance().getFont());
+        
+        // Don't draw lyric and Show name song + wait time to start
+        if (_isPaintLyric == false) {
+            // Draw wait time
+            long wait = getLyric().getWaitTimeToStart() - getTime();
+            String waitTime = wait/100 + " seconds.";
+            g2.setColor(ScrollingModeSetting.getInstance().getActiveForeground());
+            // Draw song name
+            g2.drawString(getLyric().getSongName(),
+                          10,
+                          this.getHeight()/2
+                         );
+            // Draw wait time
+            g2.drawString(waitTime,
+                          this.getWidth()/2 - getFontWidth(waitTime)/2,
+                          this.getHeight()/2 + getFontHeight() + LyricScrollPanel.lineDistance
+                         );
+            return;
+        }
         
         /* Draw current sub string is playing */
         // Determine current play line
@@ -70,17 +91,16 @@ public class LyricScrollPanel extends JPanel {
             } else {
                 if (_isPaintLyric) {
                     _currY -= 1;
-                    _isPaintLyric = false;
                 }
             }
             _nextY = _currY + lineDistance + getFontHeight() - 1;
         }
-        g2.setColor(Color.YELLOW);
+        g2.setColor(ScrollingModeSetting.getInstance().getActiveForeground());
         g2.drawString(getLyric().getSubLyricPlaying(getTime()).getContent(), 10, _currY);
         
 
         /* Draw previous sub string of the sub string which is playing */
-        g2.setColor(Color.BLUE);
+        g2.setColor(ScrollingModeSetting.getInstance().getDeactiveForeground());
         long previousLine; // the munber of previous line need to show
         previousLine = _currY / getFontHeight();
         
@@ -99,7 +119,7 @@ public class LyricScrollPanel extends JPanel {
         }
 
         /* Draw next sub string of the sub string which is playing */
-        g2.setColor(Color.BLUE);
+        g2.setColor(ScrollingModeSetting.getInstance().getDeactiveForeground());
         long forwardLine; // the munber of forward line need to show
         forwardLine = (this.getHeight() - _currY) / getFontHeight();
         
@@ -117,6 +137,7 @@ public class LyricScrollPanel extends JPanel {
             }
         }
         g2.dispose();
+        _isPaintLyric = false;
     }
 
     public void setTime(long time) {
@@ -127,10 +148,16 @@ public class LyricScrollPanel extends JPanel {
         _isPaintLyric = isPaintLyric;
     }
     
-    private int getFontHeight() {
+    public int getFontHeight() {
         Font font = ScrollingModeSetting.getInstance().getFont();
         int height = this.getGraphics().getFontMetrics(font).getHeight();
         return height;
+    }
+    
+    public int getFontWidth(String s) {
+        Font font = ScrollingModeSetting.getInstance().getFont();
+        int width = this.getGraphics().getFontMetrics(font).stringWidth(s);
+        return width;
     }
     
     public void mouseWheelMovedHandler(int rotation) {

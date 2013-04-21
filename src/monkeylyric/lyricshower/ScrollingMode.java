@@ -40,7 +40,8 @@ public class ScrollingMode extends      MFrame
     private MButton _nextButton;    
 
     public ScrollingMode() {
-        super("Monkey-Lyric");
+        super("Monkey-Lyric");     
+        
         _timer = new Timer(100, this);
 
         /**
@@ -55,6 +56,7 @@ public class ScrollingMode extends      MFrame
         _alwaysOnTopToggleButton = new MToggleButton("/resources/images/non_top.png",
                                                      "/resources/images/non_top.png",
                                                      "/resources/images/top.png");
+        
         _alwaysOnTopToggleButton.setToolTipText("Toggle On Always on Top");
         _alwaysOnTopToggleButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -146,6 +148,7 @@ public class ScrollingMode extends      MFrame
 
     @Override
     public void play() {
+        _timer.setInitialDelay((int)this.getIntervalRefreshLyric());
         _timer.start();
     }
 
@@ -175,29 +178,39 @@ public class ScrollingMode extends      MFrame
         General.getInstance().setTime(time);
     }
 
+    @Override
     public Lyric getLyric() {
         return General.getInstance().getLyric();
+    }
+    
+    public void setLyric(Lyric lyric) {
+        General.getInstance().setLyric(lyric);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // Handle when _timer event occour
         if (e.getSource() == _timer) {
-            setCurrentPlayTime(_lyricScrollPanel.getTime() + 10);
+            setCurrentPlayTime(_lyricScrollPanel.getTime()
+                                + getIntervalRefreshLyric() / 10);
+            
+            if (_lyricScrollPanel.getTime() < getLyric().getWaitTimeToStart() - 100) {
+                _lyricScrollPanel.setIsRepaintLyric(false);
+            }
             
             // Repaint lyric
-            if (_lyricScrollPanel.getTime() >= getLyric().getWaitTimeToStart() - 50) {
-                _lyricScrollPanel.validate();
+            if (_lyricScrollPanel.getTime() >= getLyric().getWaitTimeToStart() - 100) {
                 _lyricScrollPanel.setIsRepaintLyric(true);
-                this.repaint();
             }
             
             if (_lyricScrollPanel.getTime() >= getLyric().getTotalPlayTime())
             {
                 _timer.stop();
                 _lyricScrollPanel.setTime(0);
-                this.repaint();
             }
+            
+            _lyricScrollPanel.validate();
+            this.repaint();
         }
     }
     
@@ -248,4 +261,20 @@ public class ScrollingMode extends      MFrame
     private void mouseWheelMovedHandler(java.awt.event.MouseWheelEvent evt) {
         _lyricScrollPanel.mouseWheelMovedHandler(evt.getWheelRotation());
     }
+    
+    /**
+     * Get interval time to refresh lyric LyricScrollPanel
+     * @return long number (unit is milliseconds)
+     */
+    private long getIntervalRefreshLyric() {
+        Lyric lyric = General.getInstance().getLyric();
+        long numberOfLyric = lyric.getLyricsArray().size();
+        long lyricHeight = _lyricScrollPanel.getFontHeight() * numberOfLyric
+                            + (numberOfLyric - 1) * LyricScrollPanel.lineDistance;
+        
+        long totalPlayTime = lyric.getTotalPlayTime() + 100;
+        
+        return totalPlayTime / lyricHeight * 10; // convert to milliseconds unit
+    }
+    
 }

@@ -6,8 +6,7 @@ package monkeylyric.custom;
 
 import com.sun.awt.AWTUtilities;
 import java.awt.BorderLayout;
-import java.awt.Cursor;
-import java.awt.GraphicsConfiguration;
+import java.awt.Cursor;import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
@@ -18,7 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import monkeylyric.preferences.ScrollingModeSetting;
 import java.awt.event.MouseMotionAdapter;
-
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 /**
  *
  * @author LeAnh
@@ -33,6 +33,7 @@ public class MFrame extends JFrame implements MouseMotionListener {
     protected MouseMotionAdapter _dragMouseAdapter;
     protected MouseAdapter _pressedMouseAdapter;
     protected Point _pressedPoint;
+    protected JLabel _background;
     
     public void paintRoundRectangleBorder() {
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -67,8 +68,10 @@ public class MFrame extends JFrame implements MouseMotionListener {
         this.setResizable(true);
         this.setUndecorated(true);
         this.setBackground(ScrollingModeSetting.getInstance().getBackGround());
-        
         this.setLayout(new BorderLayout());
+        _background = new JLabel(new ImageIcon("/resources/images/shadow_bg.png"));
+        this.add(_background);
+        _background.setLayout(new BorderLayout());
         
         /* Setting for 4 panles corner */
         // North panel
@@ -76,28 +79,28 @@ public class MFrame extends JFrame implements MouseMotionListener {
         _north.setBounds(0, 0, this.getPreferredSize().width, _borderWidth);
         _north.setBackground(ScrollingModeSetting.getInstance().getBackGround());
         _north.addMouseMotionListener(this);
-        this.getContentPane().add(_north, BorderLayout.NORTH);
+        this._background.add(_north, BorderLayout.NORTH);
        
         // Sounth panel
         _south = new JPanel();
         _south.setBounds(0, 0, this.getPreferredSize().width, _borderWidth);
         _south.setBackground(ScrollingModeSetting.getInstance().getBackGround());
         _south.addMouseMotionListener(this);
-        this.getContentPane().add(_south,BorderLayout.SOUTH);
+        this._background.add(_south,BorderLayout.SOUTH);
         
         // East panel
         _east = new JPanel();
         _east.setBounds(0, 0, _borderWidth, this.getPreferredSize().height);
         _east.setBackground(ScrollingModeSetting.getInstance().getBackGround());
         _east.addMouseMotionListener(this);
-        this.getContentPane().add(_east, BorderLayout.EAST);
+        this._background.add(_east, BorderLayout.EAST);
         
         // West panel
         _west = new JPanel();
         _west.setBounds(0, 0, _borderWidth, this.getPreferredSize().height);
         _west.setBackground(ScrollingModeSetting.getInstance().getBackGround());
         _west.addMouseMotionListener(this);
-        this.getContentPane().add(_west, BorderLayout.WEST);
+        this._background.add(_west, BorderLayout.WEST);
         
         // Center panel
         _center = new JPanel();
@@ -105,7 +108,7 @@ public class MFrame extends JFrame implements MouseMotionListener {
         _center.setBackground(ScrollingModeSetting.getInstance().getBackGround());
         _center.addMouseMotionListener(_dragMouseAdapter);
         _center.addMouseListener(_pressedMouseAdapter);
-        this.getContentPane().add(_center, BorderLayout.CENTER);
+        this._background.add(_center, BorderLayout.CENTER);
         
         this.paintRoundRectangleBorder();
     }
@@ -115,8 +118,8 @@ public class MFrame extends JFrame implements MouseMotionListener {
         init();
     }
     
-    public MFrame(GraphicsConfiguration gc) {
-        super(gc);
+    public MFrame(Image image) {
+        super();
         init();
     }
     
@@ -125,8 +128,8 @@ public class MFrame extends JFrame implements MouseMotionListener {
         init();
     }
     
-    public MFrame(String title, GraphicsConfiguration gc) {
-        super(title, gc);
+    public MFrame(String title, Image image) {
+        super(title);
         init();
     }
     
@@ -301,5 +304,4 @@ public class MFrame extends JFrame implements MouseMotionListener {
         this.setLocation(this.getLocationOnScreen().x + deltaX,
                          this.getLocationOnScreen().y + deltaY);
     }
-    
 }

@@ -4,7 +4,7 @@
 package monkeylyric;
 
 import javax.swing.UIManager;
-import monkeylyric.lyric.Lyric;
+import monkeylyric.custom.MFrame;
 import monkeylyric.lyricshower.ScrollingMode;
 import monkeylyric.preferences.General;
 
@@ -22,7 +22,7 @@ public class MainProgram {
         try {
             String cn = UIManager.getSystemLookAndFeelClassName();
             UIManager.setLookAndFeel(cn);
-        } catch (Exception cn) {
+        } catch (Exception e) {
         }
         
         System.out.println("Welcome to Monkey-Lyric !");
@@ -30,6 +30,5 @@ public class MainProgram {
         
         ScrollingMode scroll = new ScrollingMode();
         scroll.play();
-        
     }
 }

@@ -20,6 +20,7 @@ import org.mozilla.universalchardet.UniversalDetector;
 public class Lyric {
     
     private ArrayList<SubLyric> _lyricsArray;
+    private String _songName;
 
     public void init() {
         _lyricsArray = new ArrayList<>(); 
@@ -27,6 +28,7 @@ public class Lyric {
     
     public Lyric() {
         init();
+        _songName = "";
     }
 
     /**
@@ -35,6 +37,7 @@ public class Lyric {
      */
     public Lyric(String path) {
         init();
+        _songName = path;
         readFile(path);
     }
     
@@ -328,5 +331,9 @@ public class Lyric {
         }  
         
         return wait;
+    }
+    
+    public String getSongName() {
+        return _songName;
     }
 }
