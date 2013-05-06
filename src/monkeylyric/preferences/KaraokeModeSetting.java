@@ -11,15 +11,15 @@ import java.awt.Font;
  *
  * @author LeAnh
  */
-public class ScrollingModeSetting {
-    private static ScrollingModeSetting _instance;
+public class KaraokeModeSetting {
+    private static KaraokeModeSetting _instance;
     private Color _backGround;
     private Color _activeForeground;
     private java.awt.Color _deactiveForeground;
     private Font _font;
     
     // Set for default setting frame ScrollingMode
-    public ScrollingModeSetting() {
+    public KaraokeModeSetting() {
         _backGround = new Color(200, 110, 50, 150);
         _font = new Font(Font.SERIF, Font.LAYOUT_LEFT_TO_RIGHT, 23);
         _activeForeground = Color.YELLOW;
@@ -29,9 +29,9 @@ public class ScrollingModeSetting {
     /**
      * @return the _instance
      */
-    static public ScrollingModeSetting getInstance() {
+    static public KaraokeModeSetting getInstance() {
         if (_instance == null) {
-            _instance = new ScrollingModeSetting();
+            _instance = new KaraokeModeSetting();
         }
         return _instance;
     }

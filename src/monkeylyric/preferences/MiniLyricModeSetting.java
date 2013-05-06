@@ -9,19 +9,20 @@ import java.awt.Font;
 
 /**
  *
- * @author LeAnh
+ * @author anhle
  */
-public class ScrollingModeSetting {
-    private static ScrollingModeSetting _instance;
+public class MiniLyricModeSetting {
+    private static MiniLyricModeSetting _instance;
     private Color _backGround;
     private Color _activeForeground;
     private java.awt.Color _deactiveForeground;
     private Font _font;
     
     // Set for default setting frame ScrollingMode
-    public ScrollingModeSetting() {
-        _backGround = new Color(200, 110, 50, 150);
-        _font = new Font(Font.SERIF, Font.LAYOUT_LEFT_TO_RIGHT, 23);
+    public MiniLyricModeSetting() {
+        // If set background alpha = 0. Frame will cancel all event
+        _backGround = new Color(0, 0, 0, 20);
+        _font = new Font(Font.SERIF, Font.LAYOUT_LEFT_TO_RIGHT, 40);
         _activeForeground = Color.YELLOW;
         _deactiveForeground = Color.BLUE;
     }
@@ -29,9 +30,9 @@ public class ScrollingModeSetting {
     /**
      * @return the _instance
      */
-    static public ScrollingModeSetting getInstance() {
+    static public MiniLyricModeSetting getInstance() {
         if (_instance == null) {
-            _instance = new ScrollingModeSetting();
+            _instance = new MiniLyricModeSetting();
         }
         return _instance;
     }

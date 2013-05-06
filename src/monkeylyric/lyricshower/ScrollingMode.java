@@ -4,6 +4,7 @@
  */
 package monkeylyric.lyricshower;
 
+import monkeylyric.custom.LyricScrollPanel;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -14,6 +15,7 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import monkeylyric.interfaces.ILyricPlayer;
@@ -21,7 +23,7 @@ import monkeylyric.custom.MButton;
 import monkeylyric.custom.MFrame;
 import monkeylyric.custom.MToggleButton;
 import monkeylyric.lyric.Lyric;
-import monkeylyric.preferences.General;
+import monkeylyric.preferences.GeneralSetting;
 import monkeylyric.preferences.ScrollingModeSetting;
 
 public class ScrollingMode extends      MFrame
@@ -40,7 +42,11 @@ public class ScrollingMode extends      MFrame
     private MButton _nextButton;    
 
     public ScrollingMode() {
-        super("Monkey-Lyric");     
+        super("Monkey-Lyric", ScrollingModeSetting.getInstance().getBackGround()); 
+        
+        this.getClass().getResource("/resources/images/ICON.png");
+        ImageIcon icon = new ImageIcon();
+        this.setIconImage(icon.getImage());
         
         _timer = new Timer(100, this);
 
@@ -142,10 +148,13 @@ public class ScrollingMode extends      MFrame
                 mouseWheelMovedHandler(evt);
             }
         });
-        this.setVisible(true);        
-        this.paintRoundRectangleBorder();
     }
 
+    public void showWindow() {
+        this.setVisible(true);
+        this.paintRoundRectangleBorder();
+    }
+    
     @Override
     public void play() {
         _timer.setInitialDelay((int)this.getIntervalRefreshLyric());
@@ -170,21 +179,21 @@ public class ScrollingMode extends      MFrame
 
     @Override
     public long getCurrentPlayTime() {
-        return General.getInstance().getTime();
+        return GeneralSetting.getInstance().getTime();
     }
 
     @Override
     public void setCurrentPlayTime(long time) {
-        General.getInstance().setTime(time);
+        GeneralSetting.getInstance().setTime(time);
     }
 
     @Override
     public Lyric getLyric() {
-        return General.getInstance().getLyric();
+        return GeneralSetting.getInstance().getLyric();
     }
     
     public void setLyric(Lyric lyric) {
-        General.getInstance().setLyric(lyric);
+        GeneralSetting.getInstance().setLyric(lyric);
     }
 
     @Override
@@ -267,14 +276,15 @@ public class ScrollingMode extends      MFrame
      * @return long number (unit is milliseconds)
      */
     private long getIntervalRefreshLyric() {
-        Lyric lyric = General.getInstance().getLyric();
+        Lyric lyric = GeneralSetting.getInstance().getLyric();
         long numberOfLyric = lyric.getLyricsArray().size();
         long lyricHeight = _lyricScrollPanel.getFontHeight() * numberOfLyric
                             + (numberOfLyric - 1) * LyricScrollPanel.lineDistance;
         
         long totalPlayTime = lyric.getTotalPlayTime() + 100;
         
-        return totalPlayTime / lyricHeight * 10; // convert to milliseconds unit
+        // convert  from  hundredths of seconds unit to milliseconds unit
+        return totalPlayTime / lyricHeight * 10; 
     }
     
 }

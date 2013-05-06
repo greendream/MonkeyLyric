@@ -10,20 +10,20 @@ import monkeylyric.lyric.Lyric;
  *
  * @author LeAnh
  */
-public class General {
+public class GeneralSetting {
     
-    private static General _instance;    
+    private static GeneralSetting _instance;    
     private Lyric _lyric;
     private long _time;
     
-    public General() {
+    public GeneralSetting() {
          _lyric = new Lyric("lyrics/One Direction-What Makes You Beautiful.lrc");
          _time = 0;
     }
     
-    public static General getInstance() {
+    public static GeneralSetting getInstance() {
         if (_instance == null) {
-            _instance = new General();
+            _instance = new GeneralSetting();
         }
         
         return _instance;

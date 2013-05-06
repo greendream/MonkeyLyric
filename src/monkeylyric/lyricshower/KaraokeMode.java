@@ -10,7 +10,8 @@ import javax.swing.Timer;
 import monkeylyric.interfaces.ILyricPlayer;
 import monkeylyric.custom.MFrame;
 import monkeylyric.lyric.Lyric;
-import monkeylyric.preferences.General;
+import monkeylyric.preferences.GeneralSetting;
+import monkeylyric.preferences.KaraokeModeSetting;
 
 /**
  *
@@ -22,18 +23,19 @@ public class KaraokeMode extends MFrame implements ILyricPlayer,
     private Timer _timer;
     
     public KaraokeMode() {
-        super();
+        super("Mini-Lyric", KaraokeModeSetting.getInstance().getBackGround()); 
     }
     
-    public KaraokeMode(String title) {
-        super(title);
-    }
-
     @Override
     public void play() {
         _timer.start();
     }
 
+    public void showWindow() {
+        this.setVisible(true);
+        this.paintRoundRectangleBorder();
+    }
+    
     @Override
     public void pase() {
         _timer.stop();
@@ -52,21 +54,21 @@ public class KaraokeMode extends MFrame implements ILyricPlayer,
     }
 
     public void getLyric(Lyric lyric) {
-        General.getInstance().setLyric(lyric);
+        GeneralSetting.getInstance().setLyric(lyric);
     }
     
     public Lyric getLyric() {
-        return General.getInstance().getLyric();
+        return GeneralSetting.getInstance().getLyric();
     }
 
     @Override
     public long getCurrentPlayTime() {
-        return General.getInstance().getTime();
+        return GeneralSetting.getInstance().getTime();
     }
 
     @Override
     public void setCurrentPlayTime(long time) {
-        General.getInstance().setTime(time);
+        GeneralSetting.getInstance().setTime(time);
     }
     
     @Override

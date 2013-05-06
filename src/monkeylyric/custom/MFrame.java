@@ -4,9 +4,10 @@
  */
 package monkeylyric.custom;
 
-import com.sun.awt.AWTUtilities;
 import java.awt.BorderLayout;
-import java.awt.Cursor;import java.awt.Image;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
@@ -15,15 +16,14 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import monkeylyric.preferences.ScrollingModeSetting;
 import java.awt.event.MouseMotionAdapter;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+
 /**
  *
  * @author LeAnh
  */
 public class MFrame extends JFrame implements MouseMotionListener {
+    private Color _backGround;
     private JPanel _north;
     private JPanel _south;
     private JPanel _east;
@@ -33,11 +33,10 @@ public class MFrame extends JFrame implements MouseMotionListener {
     protected MouseMotionAdapter _dragMouseAdapter;
     protected MouseAdapter _pressedMouseAdapter;
     protected Point _pressedPoint;
-    protected JLabel _background;
     
-    public void paintRoundRectangleBorder() {
+    protected void paintRoundRectangleBorder() {
         JFrame.setDefaultLookAndFeelDecorated(true);
-        AWTUtilities.setWindowShape(this,
+        this.setShape(
                 new RoundRectangle2D.Float(0f,
                 0f,
                 (float) this.getWidth(),
@@ -47,7 +46,8 @@ public class MFrame extends JFrame implements MouseMotionListener {
         
     }
     
-    private void init() {
+    private void init() {        
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         _pressedPoint = new Point();
         _dragMouseAdapter = (new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -63,73 +63,76 @@ public class MFrame extends JFrame implements MouseMotionListener {
         /**
          * Setting for windows
          */
-        this._borderWidth = 8;
+        this._borderWidth = 10;
         this.setBounds(200, 200, 350, 280);
         this.setResizable(true);
         this.setUndecorated(true);
-        this.setBackground(ScrollingModeSetting.getInstance().getBackGround());
+        this.setBackground(_backGround);
         this.setLayout(new BorderLayout());
-        _background = new JLabel(new ImageIcon("/resources/images/shadow_bg.png"));
-        this.add(_background);
-        _background.setLayout(new BorderLayout());
         
         /* Setting for 4 panles corner */
+        this.getContentPane().setBackground(new Color(0, 0, 0, 0));
         // North panel
         _north = new JPanel();
         _north.setBounds(0, 0, this.getPreferredSize().width, _borderWidth);
-        _north.setBackground(ScrollingModeSetting.getInstance().getBackGround());
+        _north.setBackground(new Color(0, 0, 0, 0));
         _north.addMouseMotionListener(this);
-        this._background.add(_north, BorderLayout.NORTH);
+        this.getContentPane().add(_north, BorderLayout.NORTH);
        
         // Sounth panel
         _south = new JPanel();
         _south.setBounds(0, 0, this.getPreferredSize().width, _borderWidth);
-        _south.setBackground(ScrollingModeSetting.getInstance().getBackGround());
+        _south.setBackground(new Color(0, 0, 0, 0));
         _south.addMouseMotionListener(this);
-        this._background.add(_south,BorderLayout.SOUTH);
+        this.getContentPane().add(_south,BorderLayout.SOUTH);
         
         // East panel
         _east = new JPanel();
         _east.setBounds(0, 0, _borderWidth, this.getPreferredSize().height);
-        _east.setBackground(ScrollingModeSetting.getInstance().getBackGround());
+        _east.setBackground(new Color(0, 0, 0, 0));
         _east.addMouseMotionListener(this);
-        this._background.add(_east, BorderLayout.EAST);
+        this.getContentPane().add(_east, BorderLayout.EAST);
         
         // West panel
         _west = new JPanel();
         _west.setBounds(0, 0, _borderWidth, this.getPreferredSize().height);
-        _west.setBackground(ScrollingModeSetting.getInstance().getBackGround());
+        _west.setBackground(new Color(0, 0, 0, 0));
         _west.addMouseMotionListener(this);
-        this._background.add(_west, BorderLayout.WEST);
+        this.getContentPane().add(_west, BorderLayout.WEST);
         
         // Center panel
         _center = new JPanel();
         _center.setLayout(new BorderLayout());
-        _center.setBackground(ScrollingModeSetting.getInstance().getBackGround());
+        _center.setBackground(new Color(0, 0, 0, 0));
         _center.addMouseMotionListener(_dragMouseAdapter);
         _center.addMouseListener(_pressedMouseAdapter);
-        this._background.add(_center, BorderLayout.CENTER);
+        this.getContentPane().add(_center, BorderLayout.CENTER);
         
         this.paintRoundRectangleBorder();
     }
     
     public MFrame() {
         super();
+        _backGround = new Color(0, 0, 0, 100);
         init();
     }
     
-    public MFrame(Image image) {
+    public MFrame(Color bg) {
         super();
+        _backGround = bg;
         init();
     }
     
-    public MFrame(String title) {
+    public MFrame(String title, Color bg) {
         super(title);
+        _backGround = bg;
         init();
     }
     
-    public MFrame(String title, Image image) {
+    public MFrame(String title, Image image, Color bg) {
         super(title);
+        this.setIconImage(image);
+        _backGround = bg;
         init();
     }
     

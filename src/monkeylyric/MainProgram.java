@@ -1,12 +1,12 @@
-    /*
+/*
  * This class construct all instance class to run Monkey-Lyric
  */
 package monkeylyric;
 
 import javax.swing.UIManager;
-import monkeylyric.custom.MFrame;
+import monkeylyric.lyricshower.MiniLyricMode;
 import monkeylyric.lyricshower.ScrollingMode;
-import monkeylyric.preferences.General;
+import monkeylyric.preferences.GeneralSetting;
 
 /**
  *
@@ -26,9 +26,13 @@ public class MainProgram {
         }
         
         System.out.println("Welcome to Monkey-Lyric !");
-        General.getInstance().getLyric().printLyric();
+        GeneralSetting.getInstance().getLyric().printLyric();
         
         ScrollingMode scroll = new ScrollingMode();
+        scroll.showWindow();
         scroll.play();
+        
+        MiniLyricMode miniLyric = new MiniLyricMode();
+        miniLyric.showWindow();
     }
 }

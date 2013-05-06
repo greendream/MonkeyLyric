@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package monkeylyric.maincontroller;
+package monkeylyric.custom;
 
 /**
  *
  * @author anhle
  */
-public class AmarokListener {
+public class KaraokePanel {
     
 }

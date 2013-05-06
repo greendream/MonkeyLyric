@@ -1,7 +1,7 @@
 package monkeylyric.interfaces;
 
 import monkeylyric.lyric.Lyric;
-import monkeylyric.preferences.General;
+import monkeylyric.preferences.GeneralSetting;
 
 /*
  * To change this template, choose Tools | Templates
